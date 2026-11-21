@@ -264,11 +264,13 @@ function render() {
       warnings.push(`Niski kontrast (${contrast.toFixed(1)}:1). Dla niezawodnego skanowania zalecany jest kontrast co najmniej 4,5:1.`);
     }
     const foregroundIsLight = contrastRatio(foreground, "#ffffff") < contrastRatio(background, "#ffffff");
-    if (foregroundIsLight && quiet < 4) {
-      warnings.push("Jasne moduły na ciemnym tle wymagają marginesu co najmniej 4 modułów.");
+    if (quiet < 4) {
+      warnings.push(foregroundIsLight
+        ? "Odwrócone kolory wymagają marginesu co najmniej 4 modułów."
+        : "Margines ciszy kodu QR powinien wynosić co najmniej 4 moduły.");
     }
-    if ((moduleStyle === "dots" || moduleStyle === "rounded" || eyeStyle === "dots") && !["Q", "H"].includes(elements.ecl.value)) {
-      warnings.push("Przy kropkach lub zaokrąglonych modułach zalecana jest korekcja błędów Q lub H.");
+    if ((moduleStyle !== "square" || eyeStyle !== "square") && !["Q", "H"].includes(elements.ecl.value)) {
+      warnings.push("Przy stylach ozdobnych zalecana jest korekcja błędów Q lub H.");
     }
     elements.warning.hidden = warnings.length === 0;
     elements.warning.textContent = warnings.join(" ");
