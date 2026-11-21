@@ -20,6 +20,8 @@ Nie przekazuj adresu docelowego w parametrze URL. Parametr `r` służy wyłączn
 
 Otwórz `https://<użytkownik>.github.io/qr_redirector/generator.html`, aby wybrać trasę z konfiguracji lub przygotować nowy wpis. Generator działa lokalnie w przeglądarce, a tras nie modyfikuje. Nowy kod zacznie działać po skopiowaniu wpisu do `routes.json` i wdrożeniu zmiany.
 
+Wersja programu jest widoczna w nagłówku generatora. Po każdej aktualizacji kodu zwiększ numer wersji w `generator.html` (np. z `1.0.0` na `1.0.1`).
+
 Możesz ustawić korekcję błędów, margines, kolory, rozmiar wydruku 20, 25 lub 30 mm oraz niezależnie style modułów (`square`, `rounded`, `dots`, `classy`, `connected`) i narożników (`square`, `rounded`, `dots`). SVG jest wspólnym źródłem podglądu i eksportu PNG (1200 × 1200 px). Generator ostrzega o niskim kontraście, zbyt małym marginesie i zaleca korekcję Q lub H dla stylów ozdobnych. Dostępne są też kopiowanie linku lub wpisu JSON oraz drukowanie. Macierz kodu generuje lokalnie biblioteka `qrcode-generator` 2.0.4 (licencja MIT w `vendor/LICENSE-qrcode-generator.txt`); aplikacja nie ładuje bibliotek zewnętrznych. Zbyt długi adres lub zbyt wysoki poziom korekcji może przekroczyć pojemność i zostanie zgłoszony czytelny błąd.
 
 Uwaga: przeglądarki ignorują dyrektywę `frame-ancestors` w CSP ustawionym przez `<meta>`. GitHub Pages nie pozwala skonfigurować nagłówka CSP z poziomu tych statycznych plików, dlatego ochrona przed osadzaniem strony nie jest tu egzekwowana.
