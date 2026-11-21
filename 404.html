@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <base href="/qr_redirector/">
+  <title>Przekierowanie</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./router.js" defer></script>
+</head>
+<body>
+  <main class="card" aria-live="polite">
+    <h1 id="heading">Przekierowywanie…</h1>
+    <p id="message">Za chwilę nastąpi bezpieczne przekierowanie.</p>
+    <a id="fallback" class="fallback" hidden rel="noopener noreferrer">Otwórz adres docelowy</a>
+  </main>
+</body>
+</html>

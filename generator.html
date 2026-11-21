@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Generator kodów QR</title>
+  <link rel="stylesheet" href="./generator.css">
+  <script src="./qr-encoder.js" defer></script>
+  <script src="./generator.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./generator.html">QR redirector</a>
+    <span>Generator do druku</span>
+  </header>
+  <main class="layout">
+    <section class="panel controls" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Narzędzie</p>
+        <h1 id="page-title">Generator kodów QR</h1>
+        <p class="intro">Wybierz trasę lub przygotuj nowy wpis. Kod prowadzi do routera — docelowy adres nie jest zapisywany w QR.</p>
+      </div>
+
+      <div class="field">
+        <label for="route-list">Trasy z konfiguracji</label>
+        <select id="route-list">
+          <option value="">Wczytywanie tras…</option>
+        </select>
+        <p id="routes-status" class="help" role="status">Pobieranie routes.json…</p>
+      </div>
+
+      <div class="field-grid">
+        <div class="field">
+          <label for="slug">Klucz trasy (r)</label>
+          <input id="slug" type="text" maxlength="32" autocomplete="off" placeholder="np. w">
+        </div>
+        <div class="field">
+          <label for="target">Docelowy URL</label>
+          <input id="target" type="url" inputmode="url" autocomplete="url" placeholder="https://example.com/">
+        </div>
+      </div>
+      <p class="help">Nowy klucz i adres zadziałają po dodaniu wygenerowanego wpisu do <code>routes.json</code> i wdrożeniu zmian.</p>
+
+      <div class="field-grid settings-grid">
+        <div class="field">
+          <label for="ecl">Korekcja błędów</label>
+          <select id="ecl">
+            <option value="L">L — niska</option>
+            <option value="M" selected>M — średnia</option>
+            <option value="Q">Q — wysoka</option>
+            <option value="H">H — najwyższa</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="quiet-zone">Margines (moduły)</label>
+          <select id="quiet-zone">
+            <option value="4" selected>4 — zalecany</option>
+            <option value="2">2</option>
+            <option value="6">6</option>
+            <option value="8">8</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="size">Rozmiar wydruku</label>
+          <select id="size">
+            <option value="20">20 mm</option>
+            <option value="25" selected>25 mm</option>
+            <option value="30">30 mm</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="module-style">Styl modułów</label>
+          <select id="module-style">
+            <option value="square" selected>Kwadraty</option>
+            <option value="rounded">Zaokrąglone</option>
+            <option value="dots">Kropki</option>
+            <option value="classy">Classy</option>
+            <option value="connected">Połączone</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="eye-style">Styl narożników</label>
+          <select id="eye-style">
+            <option value="square" selected>Kwadraty</option>
+            <option value="rounded">Zaokrąglone</option>
+            <option value="dots">Kropki</option>
+          </select>
+        </div>
+        <div class="field color-field">
+          <label for="foreground">Kolor kodu</label>
+          <input id="foreground" type="color" value="#000000">
+        </div>
+        <div class="field color-field">
+          <label for="background">Kolor tła</label>
+          <input id="background" type="color" value="#ffffff">
+        </div>
+      </div>
+      <p id="contrast-warning" class="notice" role="status" hidden></p>
+
+      <div class="actions">
+        <button id="download-svg" type="button" class="button primary">Pobierz SVG</button>
+        <button id="download-png" type="button" class="button">Pobierz PNG</button>
+        <button id="copy-link" type="button" class="button">Kopiuj link</button>
+        <button id="copy-entry" type="button" class="button">Kopiuj wpis do routes.json</button>
+        <button id="print" type="button" class="button">Drukuj</button>
+      </div>
+      <p id="status" class="help" role="status"></p>
+    </section>
+
+    <section class="panel preview-panel" aria-labelledby="preview-title">
+      <div class="preview-heading">
+        <div>
+          <p class="eyebrow">Podgląd</p>
+          <h2 id="preview-title">Kod QR</h2>
+        </div>
+        <span id="print-size" class="size-badge">25 mm</span>
+      </div>
+      <div id="qr-preview" class="qr-preview" aria-label="Podgląd kodu QR">
+        <p class="placeholder">Wybierz lub wpisz poprawną trasę.</p>
+      </div>
+      <p class="dimension-note">Rozmiar wydruku: <strong id="dimension">25 × 25 mm</strong></p>
+      <div class="url-block">
+        <h3>Link w kodzie QR</h3>
+        <p id="redirect-url" class="url-value">—</p>
+      </div>
+      <div class="url-block">
+        <h3>Adres docelowy</h3>
+        <p id="destination-url" class="url-value">—</p>
+      </div>
+      <p class="print-caption">QR redirector</p>
+    </section>
+  </main>
+</body>
+</html>
